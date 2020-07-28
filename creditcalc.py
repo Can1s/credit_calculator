@@ -1,29 +1,40 @@
 import math
 
 
-print("Enter the credit principal:")
-principal = int(input())
 print("""What do you want to calculate? 
-type "m" - for the count of months, 
-type "p" - for the monthly payment:
-""")
+type "n" for the count of months, 
+type "a" for the annuity monthly payment,
+type "p" for credit principal:""")
 type_calculate = input()
-if type_calculate.__eq__("p"):
-    print("Enter the count of months:")
-    count_of_months = int(input())
-    monthly_payment = principal / count_of_months
-    last_payment = principal - (count_of_months - 1) * math.ceil(monthly_payment)
-    if monthly_payment == last_payment:
-        print(f"Your monthly payment = {monthly_payment}")
-    else:
-        print(f"Your monthly payment = {math.ceil(monthly_payment)} with last month payment = {last_payment}")
-elif type_calculate.__eq__("m"):
-    print("Enter the monthly payment:")
-    monthly_payment = int(input())
-    months = math.ceil(principal / monthly_payment)
-    if months == 1:
-        print(f"""
-            It takes {months} month to repay the credit""")
-    else:
-        print(f"""
-            It takes {months} months to repay the credit""")
+if type_calculate.__eq__("n"):
+    print("Enter the credit principal:")
+    credit_principal = int(input())
+    print("Enter monthly payment:")
+    annuity_payment = float(input())
+    print("Enter credit interest:")
+    credit_interest = float(input())
+    i = credit_interest / (12 * 100)
+    n = math.ceil(math.log((annuity_payment / (annuity_payment - i * credit_principal)), i+1))
+    years = n // 12
+    months = n - years * 12
+    print(f"You need {years} years and {months} months to repay this credit!")
+elif type_calculate.__eq__("a"):
+    print("Enter the credit principal:")
+    credit_principal = int(input())
+    print("Enter count of periods:")
+    count_of_periods = float(input())
+    print("Enter credit interest:")
+    credit_interest = float(input())
+    i = credit_interest / (12 * 100)
+    a = math.ceil(credit_principal * (i * math.pow(1+i, count_of_periods) / (math.pow(1+i, count_of_periods) - 1)))
+    print(f"Your annuity payment = {a}!")
+elif type_calculate.__eq__("p"):
+    print("Enter monthly payment:")
+    annuity_payment = float(input())
+    print("Enter count of periods:")
+    count_of_periods = float(input())
+    print("Enter credit interest:")
+    credit_interest = float(input())
+    i = credit_interest / (12 * 100)
+    p = math.ceil(annuity_payment / (i * math.pow(1 + i, count_of_periods) / (math.pow(1 + i, count_of_periods) - 1)))
+    print(f"Your credit principal = {p}!")
